@@ -1,10 +1,6 @@
 from fastapi import FastAPI
 from sqlalchemy import text
-from app.core.database import engine, Base
-from app.api.asset_routes import router as asset_router
-from app.models.asset import Asset
-
-Base.metadata.create_all(bind=engine)
+from app.core.database import engine
 
 app = FastAPI(title="InfraTrack API")
 
@@ -17,5 +13,3 @@ def health_db():
     with engine.connect() as connection:
         connection.execute(text("SELECT 1"))
     return {"database": "ok"}
-
-app.include_router(asset_router)
